@@ -1,0 +1,20 @@
+[Unit]
+Description=Universal ModemManager to Asterisk VoIP/AudioSocket Bridge
+After=network.target ModemManager.service sound.target
+Wants=ModemManager.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/mm2astrisk -c /etc/mm2astrisk/config.ini
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security sandbox
+ProtectHome=read-only
+ProtectSystem=full
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
